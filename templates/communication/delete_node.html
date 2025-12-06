@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Node - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="mb-6">
+        <a href="{% url 'communication:admin_dashboard' %}" class="text-blue-600 hover:text-blue-800 mb-4 inline-block transition-all duration-300 hover:scale-105 hover:font-semibold">
+            ← Back to Admin Dashboard
+        </a>
+        <h1 class="text-3xl font-bold text-gray-900 transition-all duration-300 hover:text-red-600 hover:scale-105 inline-block">🗑️ Delete Node</h1>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-8">
+        <div class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold text-red-800 mb-4">⚠️ Warning: This action cannot be undone!</h2>
+            <p class="text-red-700 mb-2">Deleting this node will also permanently delete:</p>
+            <ul class="list-disc list-inside text-red-700 space-y-1">
+                <li>The user account: <strong>{{ node.user.username }}</strong></li>
+                <li>All messages sent by this node</li>
+                <li>All messages received by this node</li>
+                <li>All node information and settings</li>
+            </ul>
+        </div>
+
+        <div class="bg-gray-50 rounded-lg p-6 mb-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Node Information:</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <p class="text-sm text-gray-600">Node Name:</p>
+                    <p class="font-semibold text-gray-900">{{ node.node_name }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">ESP32 Device ID:</p>
+                    <p class="font-semibold text-gray-900">{{ node.esp32_device_id }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">LoRa Node ID:</p>
+                    <p class="font-semibold text-gray-900">{{ node.lora_node_id }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Status:</p>
+                    <p class="font-semibold {% if node.status == 'ONLINE' %}text-green-600{% else %}text-red-600{% endif %}">
+                        {{ node.get_status_display }}
+                    </p>
+                </div>
+                {% if node.contact_name %}
+                <div>
+                    <p class="text-sm text-gray-600">Contact:</p>
+                    <p class="font-semibold text-gray-900">{{ node.contact_name }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            <div class="flex gap-4">
+                <button type="submit" class="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 hover:scale-110 hover:shadow-lg transition-all duration-300 font-medium transform">
+                    Yes, Delete Node
+                </button>
+                <a href="{% url 'communication:admin_dashboard' %}" class="px-6 py-3 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 hover:scale-110 transition-all duration-300 font-medium transform">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

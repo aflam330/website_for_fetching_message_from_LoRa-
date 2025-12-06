@@ -48,6 +48,24 @@
             <p class="text-sm text-gray-600 transition-colors duration-300 hover:text-gray-800">User Account</p>
             <p class="text-lg font-semibold text-gray-900 transition-colors duration-300 hover:text-blue-600">{{ node.user.username }}</p>
         </div>
+        {% if node.contact_name %}
+        <div class="transition-all duration-300 hover:bg-gray-50 rounded-lg p-2 hover:scale-105">
+            <p class="text-sm text-gray-600 transition-colors duration-300 hover:text-gray-800">Contact Name</p>
+            <p class="text-lg font-semibold text-gray-900 transition-colors duration-300 hover:text-blue-600">{{ node.contact_name }}</p>
+        </div>
+        {% endif %}
+        {% if node.contact_email %}
+        <div class="transition-all duration-300 hover:bg-gray-50 rounded-lg p-2 hover:scale-105">
+            <p class="text-sm text-gray-600 transition-colors duration-300 hover:text-gray-800">Contact Email</p>
+            <p class="text-lg font-semibold text-gray-900 transition-colors duration-300 hover:text-blue-600">{{ node.contact_email }}</p>
+        </div>
+        {% endif %}
+        {% if node.contact_phone %}
+        <div class="transition-all duration-300 hover:bg-gray-50 rounded-lg p-2 hover:scale-105">
+            <p class="text-sm text-gray-600 transition-colors duration-300 hover:text-gray-800">Contact Phone</p>
+            <p class="text-lg font-semibold text-gray-900 transition-colors duration-300 hover:text-blue-600">{{ node.contact_phone }}</p>
+        </div>
+        {% endif %}
         {% if node.description %}
             <div class="md:col-span-2">
                 <p class="text-sm text-gray-600">Description</p>

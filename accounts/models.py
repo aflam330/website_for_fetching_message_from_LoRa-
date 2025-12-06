@@ -50,6 +50,20 @@ class Node(models.Model):
         blank=True,
         help_text="Optional description or location information"
     )
+    contact_email = models.EmailField(
+        blank=True,
+        help_text="Contact email for this node/operator"
+    )
+    contact_phone = models.CharField(
+        max_length=20,
+        blank=True,
+        help_text="Contact phone number"
+    )
+    contact_name = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text="Name of the person responsible for this node"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

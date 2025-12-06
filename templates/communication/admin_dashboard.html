@@ -3,9 +3,19 @@
 {% block title %}Admin Dashboard - LoRa ESP32 Dashboard{% endblock %}
 
 {% block content %}
-<div class="mb-6">
-    <h1 class="text-3xl font-bold text-gray-900 transition-all duration-300 hover:text-purple-600 hover:scale-105 inline-block">Admin Dashboard</h1>
-    <p class="text-gray-600 mt-1 transition-colors duration-300 hover:text-gray-800">Overview of all nodes and messages</p>
+<div class="mb-6 flex justify-between items-center">
+    <div>
+        <h1 class="text-3xl font-bold text-gray-900 transition-all duration-300 hover:text-purple-600 hover:scale-105 inline-block">Admin Dashboard</h1>
+        <p class="text-gray-600 mt-1 transition-colors duration-300 hover:text-gray-800">Overview of all nodes and messages</p>
+    </div>
+    <div class="flex gap-3">
+        <a href="{% url 'communication:track_nodes' %}" class="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 hover:scale-110 hover:shadow-lg transition-all duration-300 font-medium transform">
+            📍 Track Nodes
+        </a>
+        <a href="{% url 'communication:add_node' %}" class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 hover:scale-110 hover:shadow-lg transition-all duration-300 font-medium transform">
+            ➕ Add Node
+        </a>
+    </div>
 </div>
 
 <!-- Statistics Cards -->
@@ -94,9 +104,15 @@
                                 {% endif %}
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap text-sm">
-                                <a href="{% url 'communication:node_detail' node.id %}" class="text-blue-600 hover:text-blue-800 transition-all duration-300 hover:underline hover:font-semibold">
-                                    View Details
-                                </a>
+                                <div class="flex gap-2">
+                                    <a href="{% url 'communication:node_detail' node.id %}" class="text-blue-600 hover:text-blue-800 transition-all duration-300 hover:underline hover:font-semibold">
+                                        View
+                                    </a>
+                                    <span class="text-gray-300">|</span>
+                                    <a href="{% url 'communication:delete_node' node.id %}" class="text-red-600 hover:text-red-800 transition-all duration-300 hover:underline hover:font-semibold" onclick="return confirm('Are you sure you want to delete this node? This will also delete the user account.')">
+                                        Delete
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}

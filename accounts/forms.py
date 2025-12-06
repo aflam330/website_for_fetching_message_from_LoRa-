@@ -47,10 +47,36 @@ class NodeRegistrationForm(UserCreationForm):
             'placeholder': 'Optional description or location'
         })
     )
+    contact_email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'your.email@example.com'
+        }),
+        help_text="Contact email address"
+    )
+    contact_phone = forms.CharField(
+        max_length=20,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': '+1234567890'
+        }),
+        help_text="Contact phone number"
+    )
+    contact_name = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'John Doe'
+        }),
+        help_text="Name of the person responsible for this node"
+    )
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'node_name', 'esp32_device_id', 'lora_node_id', 'description')
+        fields = ('username', 'password1', 'password2', 'node_name', 'esp32_device_id', 'lora_node_id', 'description', 'contact_email', 'contact_phone', 'contact_name')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -75,7 +101,10 @@ class NodeRegistrationForm(UserCreationForm):
                 node_name=self.cleaned_data['node_name'],
                 esp32_device_id=self.cleaned_data['esp32_device_id'],
                 lora_node_id=self.cleaned_data['lora_node_id'],
-                description=self.cleaned_data.get('description', '')
+                description=self.cleaned_data.get('description', ''),
+                contact_email=self.cleaned_data.get('contact_email', ''),
+                contact_phone=self.cleaned_data.get('contact_phone', ''),
+                contact_name=self.cleaned_data.get('contact_name', '')
             )
         return user
 

@@ -10,7 +10,9 @@ from django.views.decorators.http import require_http_methods
 from django.utils import timezone
 import json
 from .models import Message
+from .forms import AdminNodeForm
 from accounts.models import Node
+from django.contrib.auth.models import User
 
 
 @user_passes_test(lambda u: u.is_staff or u.is_superuser)
@@ -56,6 +58,87 @@ def node_detail(request, node_id):
         'received_messages': received_messages,
     }
     return render(request, 'communication/node_detail.html', context)
+
+
+@user_passes_test(lambda u: u.is_staff or u.is_superuser)
+def add_node(request):
+    """
+    Admin view to add a new node/user manually.
+    """
+    if request.method == 'POST':
+        form = AdminNodeForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data.get('password')
+            
+            # Check if user already exists
+            if User.objects.filter(username=username).exists():
+                messages.error(request, f'User "{username}" already exists.')
+            else:
+                if not password:
+                    messages.error(request, 'Password is required for new users.')
+                else:
+                    # Create user
+                    user = User.objects.create_user(
+                        username=username,
+                        password=password
+                    )
+                    
+                    # Create node
+                    node = form.save(commit=False)
+                    node.user = user
+                    node.save()
+                    
+                    messages.success(request, f'Node "{node.node_name}" added successfully!')
+                    return redirect('communication:admin_dashboard')
+    else:
+        form = AdminNodeForm()
+    
+    return render(request, 'communication/add_node.html', {'form': form})
+
+
+@user_passes_test(lambda u: u.is_staff or u.is_superuser)
+def delete_node(request, node_id):
+    """
+    Admin view to delete a node/user.
+    """
+    node = get_object_or_404(Node, pk=node_id)
+    
+    if request.method == 'POST':
+        node_name = node.node_name
+        user = node.user
+        node.delete()  # This will cascade delete the user due to CASCADE relationship
+        messages.success(request, f'Node "{node_name}" and user "{user.username}" deleted successfully!')
+        return redirect('communication:admin_dashboard')
+    
+    return render(request, 'communication/delete_node.html', {'node': node})
+
+
+@user_passes_test(lambda u: u.is_staff or u.is_superuser)
+def track_nodes(request):
+    """
+    Admin view to track all nodes and their status.
+    """
+    all_nodes = Node.objects.all().order_by('node_name')
+    
+    # Statistics
+    total_nodes = all_nodes.count()
+    online_nodes = all_nodes.filter(status='ONLINE').count()
+    offline_nodes = all_nodes.filter(status='OFFLINE').count()
+    
+    # Group nodes by status
+    online_nodes_list = all_nodes.filter(status='ONLINE')
+    offline_nodes_list = all_nodes.filter(status='OFFLINE')
+    
+    context = {
+        'all_nodes': all_nodes,
+        'online_nodes': online_nodes_list,
+        'offline_nodes': offline_nodes_list,
+        'total_nodes': total_nodes,
+        'online_count': online_nodes,
+        'offline_count': offline_nodes,
+    }
+    return render(request, 'communication/track_nodes.html', context)
 
 
 # ==================== API ENDPOINTS FOR ESP32 ====================

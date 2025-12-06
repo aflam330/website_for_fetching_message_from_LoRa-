@@ -10,6 +10,9 @@ urlpatterns = [
     # Web views
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('node/<int:node_id>/', views.node_detail, name='node_detail'),
+    path('add-node/', views.add_node, name='add_node'),
+    path('delete-node/<int:node_id>/', views.delete_node, name='delete_node'),
+    path('track-nodes/', views.track_nodes, name='track_nodes'),
     
     # API endpoints for ESP32
     path('api/nodes/update-status/', views.api_update_status, name='api_update_status'),
