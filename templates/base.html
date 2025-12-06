@@ -17,7 +17,7 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     {% if user.is_authenticated %}
-                        <span class="px-3 py-2 rounded hover:bg-blue-700 transition">Hello, {{ user.username }}</span>
+                        <span class="px-3 py-2 rounded hover:bg-blue-700 transition">Welcome, {{ user.username }}</span>
                         {% if user.is_staff or user.is_superuser %}
                             <a href="{% url 'communication:admin_dashboard' %}" class="px-3 py-2 rounded hover:bg-blue-700 transition">
                                 Admin Dashboard

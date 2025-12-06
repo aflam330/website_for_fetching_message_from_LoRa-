@@ -17,7 +17,7 @@ class NodeRegistrationForm(UserCreationForm):
         required=True,
         widget=forms.TextInput(attrs={
             'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500',
-            'placeholder': 'e.g., Node A, Hilltop Node'
+            'placeholder': 'e.g., Node A'
         }),
         help_text="A human-readable name for this node"
     )
@@ -60,7 +60,7 @@ class NodeRegistrationForm(UserCreationForm):
         required=True,
         widget=forms.TextInput(attrs={
             'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500',
-            'placeholder': '+1234567890'
+            'placeholder': '+8801234567890'
         }),
         help_text="Contact phone number"
     )
@@ -69,7 +69,7 @@ class NodeRegistrationForm(UserCreationForm):
         required=True,
         widget=forms.TextInput(attrs={
             'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500',
-            'placeholder': 'John Doe'
+            'placeholder': 'Please enter your name'
         }),
         help_text="Name of the person responsible for this node"
     )
@@ -82,13 +82,16 @@ class NodeRegistrationForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         # Add Tailwind classes to default fields
         self.fields['username'].widget.attrs.update({
-            'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+            'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'Enter username'
         })
         self.fields['password1'].widget.attrs.update({
-            'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+            'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'Enter password'
         })
         self.fields['password2'].widget.attrs.update({
-            'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+            'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'Confirm password'
         })
 
     def save(self, commit=True):

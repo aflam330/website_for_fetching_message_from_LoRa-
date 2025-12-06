@@ -3,17 +3,15 @@
 {% block title %}Add Node - Admin Dashboard{% endblock %}
 
 {% block content %}
-<div class="max-w-3xl mx-auto">
-    <div class="mb-6">
-        <a href="{% url 'communication:admin_dashboard' %}" class="text-blue-600 hover:text-blue-800 mb-4 inline-block transition-all duration-300 hover:scale-105 hover:font-semibold">
+<div class="max-w-3xl mx-auto mb-6 bg-gray-400 p-4 rounded-lg shadow-md">
+    <div class="mt -6">
+        <h1 class="text-3xl font-bold text-gray-900 mt-2"> Add New Node</h1>
+        <a href="{% url 'communication:admin_dashboard' %}" class="mt-4 bg-gray-500 inline-block mb-4 px-4 py-2 text-black-700 hover:bg-gray-700 rounded-md font-medium transition-all duration-200 transform hover:scale-105">
             ← Back to Admin Dashboard
         </a>
-        <div class="mt -6">
-            <h1 class="text-3xl font-bold text-gray-900 "> Add New Node</h1>
-        </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-md p-8">
+    <div class="mt-2 bg-white rounded-lg shadow-md p-8">
         <form method="post" class="space-y-6">
             {% csrf_token %}
             
