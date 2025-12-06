@@ -1,24 +1,5 @@
 # LoRa ESP32 Communication Dashboard
 
-Install dependencies:
-   pip install -r requirements.txt
-Run migrations:
-   python manage.py makemigrations   python manage.py migrate
-Create admin user:
-   python manage.py createsuperuser
-(Optional) Create test nodes:
-   python manage.py create_test_nodes
-Start the server:
-   python manage.py runserver
-Access the app:
-Home: http://127.0.0.1:8000/
-Login: http://127.0.0.1:8000/login/
-Register: http://127.0.0.1:8000/register/
-Admin Dashboard: http://127.0.0.1:8000/communication/admin-dashboard/
-Login page: http://127.0.0.1:8000/login/
-Admin Dashboard: http://127.0.0.1:8000/communication/admin-dashboard/
-Django Admin: http://127.0.0.1:8000/admin/
-
 A Django web application for managing and monitoring LoRa communication between ESP32 nodes.
 
 ## Features
@@ -296,3 +277,21 @@ Possible extensions:
 
 This project is provided as-is for educational and development purposes.
 
+Install dependencies:
+   pip install -r requirements.txt
+Run migrations:
+   python manage.py makemigrations   python manage.py migrate
+Create admin user:
+   python manage.py createsuperuser
+(Optional) Create test nodes:
+   python manage.py create_test_nodes
+Start the server:
+   python manage.py runserver
+Access the app:
+Home: http://127.0.0.1:8000/
+Login: http://127.0.0.1:8000/login/
+Register: http://127.0.0.1:8000/register/
+Admin Dashboard: http://127.0.0.1:8000/communication/admin-dashboard/
+Login page: http://127.0.0.1:8000/login/
+Admin Dashboard: http://127.0.0.1:8000/communication/admin-dashboard/
+Django Admin: http://127.0.0.1:8000/admin/
