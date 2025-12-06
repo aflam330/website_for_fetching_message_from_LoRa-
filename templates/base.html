@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LoRa ESP32 Communication Dashboard{% endblock %}</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-800 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="{% url 'accounts:home' %}" class="text-xl font-bold px-3 py-2 rounded hover:bg-blue-700 transition">LoRa ESP32 Dashboard</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    {% if user.is_authenticated %}
+                        <span class="px-3 py-2 rounded hover:bg-blue-700 transition">Hello, {{ user.username }}</span>
+                        {% if user.is_staff or user.is_superuser %}
+                            <a href="{% url 'communication:admin_dashboard' %}" class="px-3 py-2 rounded hover:bg-blue-700 transition">
+                                Admin Dashboard
+                            </a>
+                        {% else %}
+                            <a href="{% url 'accounts:node_dashboard' %}" class="px-3 py-2 rounded hover:bg-blue-700 transition">
+                                My Dashboard
+                            </a>
+                        {% endif %}
+                        <form method="post" action="{% url 'accounts:logout' %}" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="px-3 py-2 rounded hover:bg-blue-700 transition bg-transparent border-none text-white cursor-pointer">
+                                Logout
+                            </button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}" class="px-3 py-2 rounded hover:bg-blue-700 transition">
+                            Login
+                        </a>
+                        <a href="{% url 'accounts:register' %}" class="px-3 py-2 rounded hover:bg-blue-700 transition">
+                            Register
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+            {% for message in messages %}
+                <div class="mb-2 p-4 rounded-md {% if message.tags == 'error' %}bg-red-100 text-red-800{% elif message.tags == 'success' %}bg-green-100 text-green-800{% else %}bg-blue-100 text-blue-800{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy;Communication system, aflam330@gmail.com</p>
+        </div>
+    </footer>
+</body>
+</html>
+

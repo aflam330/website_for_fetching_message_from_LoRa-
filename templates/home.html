@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center mb-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-2 transition-all duration-300 hover:text-blue-600 hover:scale-105 inline-block">LoRa ESP32 Communication Dashboard</h1>
+    <p class="text-gray-600 transition-colors duration-300 hover:text-gray-800">Monitor and manage your LoRa network nodes</p>
+</div>
+
+<!-- Statistics Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:bg-blue-50 cursor-pointer">
+        <div class="flex items-center">
+            <div class="flex-shrink-0 bg-blue-100 rounded-md p-3 transition-all duration-300 hover:bg-blue-200 hover:scale-110">
+                <svg class="h-6 w-6 text-blue-600 transition-transform duration-300 hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="text-sm font-medium text-gray-500 transition-colors duration-300 hover:text-gray-700">Total Nodes</p>
+                <p class="text-2xl font-semibold text-gray-900 transition-all duration-300 hover:text-blue-600 hover:scale-110 inline-block">{{ total_nodes }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:bg-green-50 cursor-pointer">
+        <div class="flex items-center">
+            <div class="flex-shrink-0 bg-green-100 rounded-md p-3 transition-all duration-300 hover:bg-green-200 hover:scale-110">
+                <svg class="h-6 w-6 text-green-600 transition-transform duration-300 hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="text-sm font-medium text-gray-500 transition-colors duration-300 hover:text-gray-700">Online Nodes</p>
+                <p class="text-2xl font-semibold text-green-600 transition-all duration-300 hover:scale-110 inline-block">{{ online_nodes }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:bg-red-50 cursor-pointer">
+        <div class="flex items-center">
+            <div class="flex-shrink-0 bg-red-100 rounded-md p-3 transition-all duration-300 hover:bg-red-200 hover:scale-110">
+                <svg class="h-6 w-6 text-red-600 transition-transform duration-300 hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="text-sm font-medium text-gray-500 transition-colors duration-300 hover:text-gray-700">Offline Nodes</p>
+                <p class="text-2xl font-semibold text-red-600 transition-all duration-300 hover:scale-110 inline-block">{{ offline_nodes }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Technology Information Section -->
+<div class="mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">How It Works</h2>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- LoRa Card -->
+        <div class="bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:bg-purple-50 cursor-pointer group">
+            <div class="flex items-center mb-4">
+                <div class="flex-shrink-0 bg-purple-100 rounded-md p-3 transition-all duration-300 group-hover:bg-purple-200 group-hover:scale-110 group-hover:rotate-3">
+                    <svg class="h-8 w-8 text-purple-600 transition-transform duration-300 group-hover:scale-125" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 ml-3 transition-colors duration-300 group-hover:text-purple-600">LoRa</h3>
+            </div>
+            <p class="text-gray-700 mb-3">
+                <strong>LoRa (Long Range)</strong> is a low-power, wide-area networking protocol designed for IoT applications. It enables long-range communication (up to 15 km in rural areas) with minimal power consumption.
+            </p>
+            <ul class="text-sm text-gray-600 space-y-2">
+                <li class="flex items-start">
+                    <span class="text-purple-600 mr-2">•</span>
+                    <span>Operates in unlicensed radio frequency bands (868 MHz, 915 MHz)</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-purple-600 mr-2">•</span>
+                    <span>Low data rates (0.3-50 kbps) but excellent range</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-purple-600 mr-2">•</span>
+                    <span>Ideal for sensor networks, smart cities, and remote monitoring</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-purple-600 mr-2">•</span>
+                    <span>Uses spread spectrum modulation for interference resistance</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ESP32 Card -->
+        <div class="bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:bg-blue-50 cursor-pointer group">
+            <div class="flex items-center mb-4">
+                <div class="flex-shrink-0 bg-blue-100 rounded-md p-3 transition-all duration-300 group-hover:bg-blue-200 group-hover:scale-110 group-hover:rotate-3">
+                    <svg class="h-8 w-8 text-blue-600 transition-transform duration-300 group-hover:scale-125" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 ml-3 transition-colors duration-300 group-hover:text-blue-600">ESP32</h3>
+            </div>
+            <p class="text-gray-700 mb-3">
+                <strong>ESP32</strong> is a low-cost, low-power system-on-chip (SoC) microcontroller with integrated Wi-Fi and Bluetooth capabilities. It's widely used in IoT projects.
+            </p>
+            <ul class="text-sm text-gray-600 space-y-2">
+                <li class="flex items-start">
+                    <span class="text-blue-600 mr-2">•</span>
+                    <span>Dual-core processor (240 MHz) with 520KB RAM</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-blue-600 mr-2">•</span>
+                    <span>Built-in Wi-Fi and Bluetooth for connectivity</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-blue-600 mr-2">•</span>
+                    <span>Multiple GPIO pins for sensors and actuators</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-blue-600 mr-2">•</span>
+                    <span>Programmable using Arduino IDE or ESP-IDF</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Arduino Card -->
+        <div class="bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:bg-green-50 cursor-pointer group">
+            <div class="flex items-center mb-4">
+                <div class="flex-shrink-0 bg-green-100 rounded-md p-3 transition-all duration-300 group-hover:bg-green-200 group-hover:scale-110 group-hover:rotate-3">
+                    <svg class="h-8 w-8 text-green-600 transition-transform duration-300 group-hover:scale-125" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 ml-3 transition-colors duration-300 group-hover:text-green-600">Arduino</h3>
+            </div>
+            <p class="text-gray-700 mb-3">
+                <strong>Arduino</strong> is an open-source electronics platform based on easy-to-use hardware and software. It provides a simple way to program microcontrollers.
+            </p>
+            <ul class="text-sm text-gray-600 space-y-2">
+                <li class="flex items-start">
+                    <span class="text-green-600 mr-2">•</span>
+                    <span>Simple programming language based on C/C++</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-green-600 mr-2">•</span>
+                    <span>Arduino IDE for writing and uploading code</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-green-600 mr-2">•</span>
+                    <span>Extensive library ecosystem for sensors and modules</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-green-600 mr-2">•</span>
+                    <span>ESP32 can be programmed using Arduino framework</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- How They Work Together -->
+<div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg shadow-md p-8 mb-8 transition-all duration-300 hover:shadow-xl">
+    <h2 class="text-2xl font-bold text-gray-900 mb-4 text-center transition-colors duration-300 hover:text-blue-600">How They Work Together</h2>
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg p-6 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.01]">
+            <p class="text-gray-700 mb-4 leading-relaxed transition-colors duration-300 hover:text-gray-900">
+                In this LoRa communication system, <strong class="transition-colors duration-300 hover:text-blue-600">ESP32</strong> microcontrollers are programmed using the <strong class="transition-colors duration-300 hover:text-green-600">Arduino</strong> framework to create intelligent nodes. Each ESP32 node is equipped with a <strong class="transition-colors duration-300 hover:text-purple-600">LoRa</strong> module (like SX1276 or SX1278) that enables long-range, low-power wireless communication.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                <div class="bg-blue-50 rounded-lg p-4 transition-all duration-300 hover:bg-blue-100 hover:shadow-md hover:scale-105 cursor-pointer">
+                    <h4 class="font-semibold text-gray-900 mb-2 transition-colors duration-300 hover:text-blue-700">Communication Flow:</h4>
+                    <ol class="text-sm text-gray-700 space-y-1 list-decimal list-inside">
+                        <li class="transition-colors duration-300 hover:text-gray-900">ESP32 processes data and commands</li>
+                        <li class="transition-colors duration-300 hover:text-gray-900">LoRa module transmits messages wirelessly</li>
+                        <li class="transition-colors duration-300 hover:text-gray-900">Messages travel long distances (km range)</li>
+                        <li class="transition-colors duration-300 hover:text-gray-900">Receiving node's LoRa module captures signal</li>
+                        <li class="transition-colors duration-300 hover:text-gray-900">ESP32 processes received data</li>
+                    </ol>
+                </div>
+                <div class="bg-purple-50 rounded-lg p-4 transition-all duration-300 hover:bg-purple-100 hover:shadow-md hover:scale-105 cursor-pointer">
+                    <h4 class="font-semibold text-gray-900 mb-2 transition-colors duration-300 hover:text-purple-700">System Benefits:</h4>
+                    <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+                        <li class="transition-colors duration-300 hover:text-gray-900">Long-range communication without cellular networks</li>
+                        <li class="transition-colors duration-300 hover:text-gray-900">Low power consumption for battery operation</li>
+                        <li class="transition-colors duration-300 hover:text-gray-900">Cost-effective IoT solutions</li>
+                        <li class="transition-colors duration-300 hover:text-gray-900">Ideal for remote monitoring and control</li>
+                        <li class="transition-colors duration-300 hover:text-gray-900">Mesh networking capabilities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Links (if authenticated) -->
+{% if user.is_authenticated %}
+<div class="bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-xl">
+    <h2 class="text-xl font-semibold text-gray-900 mb-4 transition-colors duration-300 hover:text-blue-600">Quick Access</h2>
+    <div class="flex flex-wrap gap-4">
+        <a href="{% url 'accounts:node_dashboard' %}" class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 hover:scale-110 hover:shadow-lg transition-all duration-300 font-medium transform">
+            My Dashboard
+        </a>
+        {% if user.is_staff or user.is_superuser %}
+        <a href="{% url 'communication:admin_dashboard' %}" class="px-6 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 hover:scale-110 hover:shadow-lg transition-all duration-300 font-medium transform">
+            Admin Dashboard
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
