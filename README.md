@@ -2,6 +2,11 @@
 
 A Django web application for managing and monitoring LoRa communication between ESP32 nodes.
 
+## 📖 Hardware Connection Guide
+
+**New to ESP32 + LoRa?** Check out the comprehensive connection guide:
+- **[ESP32_LORA_CONNECTION_GUIDE.md](ESP32_LORA_CONNECTION_GUIDE.md)** - Complete guide on connecting ESP32 to LoRa module, wiring diagrams, code examples, and integration with this Django server.
+
 ## Features
 
 - **Node Management**: Register and track ESP32 + LoRa nodes
