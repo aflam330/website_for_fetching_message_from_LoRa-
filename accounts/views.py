@@ -46,9 +46,43 @@ def register(request):
 class CustomLoginView(LoginView):
     """
     Custom login view with Tailwind styling context.
+    Validates that the user type matches the selected login type.
     """
     template_name = 'accounts/login.html'
     redirect_authenticated_user = True
+
+    def form_valid(self, form):
+        """
+        Override form_valid to check if user type matches selected login type.
+        """
+        login_type = self.request.POST.get('login_type', 'node')
+        user = form.get_user()
+        
+        # Check if user type matches selected login type
+        is_admin = user.is_staff or user.is_superuser
+        
+        if login_type == 'node' and is_admin:
+            # Admin trying to log in as node user
+            form.add_error(None, 'You selected "Node User" but this account is an admin. Please select "Admin" to log in.')
+            return self.form_invalid(form)
+        elif login_type == 'admin' and not is_admin:
+            # Node user trying to log in as admin
+            form.add_error(None, 'You selected "Admin" but this account is not an admin. Please select "Node User" to log in.')
+            return self.form_invalid(form)
+        
+        # User type matches, proceed with normal login
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        """
+        Redirect users to the appropriate dashboard based on their user type.
+        """
+        user = self.request.user
+        if user.is_staff or user.is_superuser:
+            from django.urls import reverse
+            return reverse('communication:admin_dashboard')
+        else:
+            return super().get_success_url()
 
 
 @login_required

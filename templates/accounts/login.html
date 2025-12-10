@@ -25,6 +25,9 @@
     <form method="post" class="space-y-4" id="loginForm">
         {% csrf_token %}
         
+        <!-- Hidden input to store selected login type -->
+        <input type="hidden" name="login_type" id="loginType" value="node">
+        
         {% if form.errors %}
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
                 <p>Please correct the errors below:</p>
@@ -72,6 +75,7 @@
     const nodeBtn = document.getElementById('nodeBtn');
     const adminBtn = document.getElementById('adminBtn');
     const loginTypeInfo = document.getElementById('loginTypeInfo');
+    const loginTypeInput = document.getElementById('loginType');
     
     nodeBtn.addEventListener('click', function() {
         nodeBtn.classList.remove('bg-gray-300', 'text-gray-700');
@@ -79,6 +83,7 @@
         adminBtn.classList.remove('bg-purple-600', 'text-white', 'shadow-md');
         adminBtn.classList.add('bg-gray-300', 'text-gray-700');
         loginTypeInfo.innerHTML = '<p>Login as a Node User to access your node dashboard</p>';
+        loginTypeInput.value = 'node';
     });
     
     adminBtn.addEventListener('click', function() {
@@ -87,6 +92,7 @@
         nodeBtn.classList.remove('bg-blue-600', 'text-white', 'shadow-md');
         nodeBtn.classList.add('bg-gray-300', 'text-gray-700');
         loginTypeInfo.innerHTML = '<p>Login as an Admin to access the admin dashboard</p>';
+        loginTypeInput.value = 'admin';
     });
 </script>
 {% endblock %}
